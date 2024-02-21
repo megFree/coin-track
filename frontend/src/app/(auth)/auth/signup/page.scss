@@ -1,0 +1,16 @@
+.signup-page__inputs {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 24px;
+}
+
+.signup-page__input {
+  &:not(:last-child) {
+    margin-bottom: 16px;
+  }
+}
+
+.signup-page__buttons {
+  display: flex;
+  justify-content: space-between;
+}

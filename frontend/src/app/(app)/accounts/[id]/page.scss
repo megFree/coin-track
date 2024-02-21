@@ -1,0 +1,43 @@
+.account-page__header {
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: 7px 22px 31px -8px #0000000A;
+  position: relative;
+  padding: 12px 0;
+  font-size: 24px;
+  line-height: 24px;
+  color: #807F7F;
+  margin-bottom: 32px;
+}
+
+.account-page__buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.account-page__button.base-button {
+  flex-grow: 1;
+}
+
+.account-page__back {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.account-page__amount {
+  color: var(--accent);
+  font-size: 32px;
+  line-height: 32px;
+  font-weight: 600;
+  margin-bottom: 32px;
+}
+
+.account-page__title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
+  padding-left: 52px;
+}

@@ -1,0 +1,12 @@
+{
+  "name": "coin-track",
+  "version": "1.0.0",
+  "description": "coin-track monorepo",
+  "keywords": [],
+  "author": "Friends inc.",
+  "license": "ISC",
+  "dependencies": {
+    "@coin-track/backend": "workspace:*",
+    "@coin-track/frontend": "workspace:*"
+  }
+}

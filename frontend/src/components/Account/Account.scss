@@ -1,0 +1,65 @@
+.account {
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: 7px 15px 30px -8px #00000012;
+  padding: 16px;
+  min-height: 130px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.account__header {
+  display: flex;
+  align-items: baseline;
+  overflow: hidden;
+}
+
+.account__color {
+  width: 22px;
+  height: 18px;
+  background-color: var(--accent);
+  margin-right: 8px;
+  border-radius: 7px;
+  flex-shrink: 0;
+}
+
+.account__title {
+  font-size: 24px;
+  line-height: 24px;
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding-right: 26px;
+}
+
+.account__amount {
+  font-size: 24px;
+  line-height: 24px;
+}
+
+.account__delete-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+
+  img {
+    max-height: 16px;
+    max-width: 16px;
+  }
+
+  .loader {
+    animation: rotation 2s linear infinite;
+  }
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

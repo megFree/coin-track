@@ -1,0 +1,16 @@
+.singin-page__inputs {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 24px;
+}
+
+.singin-page__input {
+  &:not(:last-child) {
+    margin-bottom: 16px;
+  }
+}
+
+.signin-page__buttons {
+  display: flex;
+  justify-content: space-between;
+}

@@ -1,0 +1,13 @@
+.base-input__exact {
+  padding: 12px;
+  font-size: 16px;
+  outline: none;
+  border-radius: 6px;
+  border: 2px solid var(--border-color);
+  width: 100%;
+}
+
+.base-input__label-text {
+  display: inline-block;
+  margin-bottom: 6px;
+}

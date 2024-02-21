@@ -1,0 +1,26 @@
+:root {
+    --white: #ffffff;
+    --black: #000000;
+    --accent: #6A11B1;
+    --gray-back: #FBFBFB;
+    --border-color: #44537126;
+    --focused: #3377FF;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Manrope', 'Roboto', sans-serif;
+    background: var(--gray-back);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+
+    &:visited {
+        color: inherit;
+    }
+}

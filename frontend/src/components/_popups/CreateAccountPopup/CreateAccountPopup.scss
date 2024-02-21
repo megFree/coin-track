@@ -1,0 +1,16 @@
+.create-account-popup__inputs {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 24px;
+}
+
+.create-account-popup__input {
+  &:not(:last-child) {
+    margin-bottom: 16px;
+  }
+}
+
+.create-account-popup__buttons {
+  display: flex;
+  justify-content: space-between;
+}

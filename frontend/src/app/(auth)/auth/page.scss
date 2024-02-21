@@ -1,0 +1,10 @@
+.auth-page__buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.auth-page__button {
+  &:not(:last-child) {
+    margin-right: 21px;
+  }
+}
