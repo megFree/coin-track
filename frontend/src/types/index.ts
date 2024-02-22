@@ -8,10 +8,10 @@ export type AuthenticationType = 'singIn' | 'singUp';
 
 export type Currency = 'RUB' | 'USD' | 'EUR';
 
-export type AppFieldType = 'username' | 'password' | 'password_repeat';
+export type AppFieldType = 'username' | 'password' | 'password_repeat' | 'account_title' | 'account_sum' | 'currency';
 
 export interface AppField {
-  value: string;
+  value: any;
   isValid: boolean;
   errorMessage: string;
   isDirty: boolean;

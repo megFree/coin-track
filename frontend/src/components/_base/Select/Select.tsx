@@ -4,6 +4,7 @@ import Shevron from '@/assets/chevron.svg';
 import classNames from 'classnames';
 import { useState } from 'react';
 import { useOutsideClick } from '@/hooks/useOutsideClick';
+import BaseTooltip from '@/components/_base/Tooltip/Tooltip';
 
 export type SelectOption = {
   id: string;
@@ -17,12 +18,20 @@ export default function BaseSelect({
   onChange = () => {},
   initOptions = [],
   label = '',
+  error = {
+    isError: false,
+    message: '',
+  }
 }: {
   label?: string;
   className?: string;
   placeholder?: string;
   onChange?: (opt: SelectOption) => void;
   initOptions?: SelectOption[],
+  error?: {
+    isError: boolean;
+    message: string;
+  }
 }) {
   const [isOpened, setIsOpened] = useState(false);
   const [options] = useState<SelectOption[]>(initOptions);
@@ -34,8 +43,9 @@ export default function BaseSelect({
     'base-select',
     className,
     {'base-select--focused': isOpened},
-    {'base-select--empty': !currentOptionId}
-  ])
+    {'base-select--empty': !currentOptionId},
+    {'base-select--error': error.isError},
+  ]);
 
   return (
     <div className={classes} onClick={() => setIsOpened(!isOpened)}>
@@ -68,8 +78,8 @@ export default function BaseSelect({
               {option.placeholder}
             </div>
           ))}
-
         </div>
+        <BaseTooltip className='base-select__tooltip'>{error.message}</BaseTooltip>
       </div>
     </div>
   )
