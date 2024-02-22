@@ -1,15 +1,11 @@
-const getScrollHandler = () => {
-  const x = window.scrollX;
-  const y = window.scrollY;
-  return () => window.scrollTo(x, y);
-}
+import { Currency } from '@/types';
 
-export const disableScroll = () => {
-  const scrollHandler = getScrollHandler();
-  window.addEventListener('scroll', scrollHandler);
-  return scrollHandler;
-}
+export function formatSumToString(amount: number, currency: Currency) {
+  const currencySymbols: Record<Currency, string> = {
+    'EUR': '€',
+    'RUB': '₽',
+    'USD': '$',
+  };
 
-export const enableScroll = (scrollHandler) => {
-  window.removeEventListener('scroll', disableScrollHandler);
+  return `${amount} ${currencySymbols[currency]}`;
 }

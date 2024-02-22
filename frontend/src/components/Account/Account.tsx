@@ -5,6 +5,7 @@ import Loader from '@/assets/loader.svg';
 import { APIAccount } from '@/types';
 import classNames from 'classnames';
 import { useState } from 'react';
+import { formatSumToString } from '@/lib/utils';
 
 export default function Account({
   className = '',
@@ -46,7 +47,7 @@ export default function Account({
         </div>
       </div>
       <div className="account__amount">
-        {account.amount} {account.currency}
+        {formatSumToString(account.amount, account.currency)}
       </div>
     </div>
   )

@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { popupOpen } from '@/redux/features/popups/popupsSlice';
 import { useEffect } from 'react';
 import { getAccounts } from '@/redux/features/main/thunks';
+import { Currency } from '@/types';
 
 export default function Home() {
   const accounts = useAppSelector((state) => state.main.accounts);
@@ -23,11 +24,20 @@ export default function Home() {
     dispatch(popupOpen({ name: 'CreateAccountPopup', title: 'Создать счёт' }));
   }
 
-  const totalFunds = accounts.reduce((sum, account) => sum += account.amount, 0);
+  const totalFunds: Record<Currency, number> = {
+    'EUR': 0,
+    'RUB': 0,
+    'USD': 0,
+  };
+
+  accounts.forEach((account) => {
+    totalFunds[account.currency] = account.amount;
+  });
+  // const totalFunds = accounts.reduce((sum, account) => sum += account.amount, 0);
 
   return (
     <main className='main-page'>
-      <TotalAmount className='main-page__total-amount' amount={totalFunds} />
+      <TotalAmount className='main-page__total-amount' funds={totalFunds} />
       <div className='main-page__accounts-list'>
         <AccountList />
       </div>
