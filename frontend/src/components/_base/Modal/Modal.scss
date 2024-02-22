@@ -1,6 +1,6 @@
 .modal {
   position: fixed;
-  transform: translate(calc(-50% + -0.5px), calc(-50% + -0.5px)); // blurry text hack
+  transform: translate(calc(-50% + -0.5px), -50%); // blurry text hack
   z-index: 100;
   height: 100vh;
   width: 100vw;

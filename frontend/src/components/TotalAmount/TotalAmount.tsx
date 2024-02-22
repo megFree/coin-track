@@ -2,6 +2,7 @@ import { Currency } from '@/types';
 import './TotalAmount.scss';
 import classNames from 'classnames';
 import { formatSumToString } from '@/lib/utils';
+import { pickBy } from 'lodash';
 
 export default function TotalAmount({
   className = '',
@@ -19,20 +20,22 @@ export default function TotalAmount({
     className,
   ]);
 
-  const fundsJsx = <>
-    {Object.keys(funds).map((key, index) => (
-      <div 
-        className='total-amount__item'
-        key={`${key}-${index}`} 
-      >
-        {formatSumToString(funds[key], key)}
-      </div>
-    ))}
-  </>
+  const notEmptyFunds = 
+    Object.entries(pickBy(funds, (val) => val > 0))
+      .map(
+        ([currency, amount], index) => (
+          <div 
+            key={`${currency}-${index}`}
+            className='total-amount__item'
+          >
+            {formatSumToString(amount, currency)}
+          </div>
+        )
+      );
 
   return (
     <div className={classes}>
-      {fundsJsx}
+      {notEmptyFunds}
     </div>
   );
 }
