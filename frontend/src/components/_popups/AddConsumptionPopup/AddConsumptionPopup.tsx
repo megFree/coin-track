@@ -13,6 +13,16 @@ export default function AddConsumptionPopup() {
   const account = useAppSelector((state) => state.main.accounts.find((account) => account.id === accountId));
   const newSum = (account?.amount || 0) - (parseInt('' + sum) || 0);
 
+  const error = {
+    isError: false,
+    message: ''
+  };
+
+  if (newSum < 0) {
+    error.isError = true;
+    error.message = 'Недостаточно средств для списания';
+  }
+
   const saveButtonHandler = async () => {
     await dispatch(updateAccount({
       ...account,
@@ -30,6 +40,7 @@ export default function AddConsumptionPopup() {
         label='Сумма' 
         initialValue={sum} 
         autoFocus={true}
+        error={error}
         onChange={(val) => setSum(val)}
       />
       <BaseButton 
@@ -40,6 +51,7 @@ export default function AddConsumptionPopup() {
           isSubmit: true,
           value: 'Сохранить'
         }}
+        disabled={error.isError}
         onClick={saveButtonHandler}
       />
     </div>

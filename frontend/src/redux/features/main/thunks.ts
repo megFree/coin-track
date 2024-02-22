@@ -117,17 +117,17 @@ export const deleteAccount = createAsyncThunk
 export const updateAccount = createAsyncThunk<any, APIAccount, ThunkContext>(
   'main/updateAccount',
   async (payload) => {
-    try {
-      await fetch(`${apiUrl}/updateAccount`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-        credentials: 'include'
-      });
-    } catch(e) {
-      console.error('Ошибка при обновлении счёта');
+    const response = await fetch(`${apiUrl}/updateAccount`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+      credentials: 'include'
+    });
+
+    if (!response.ok) {
+      throw new Error('Ошибка при обновлении счёта');
     }
   }
 )

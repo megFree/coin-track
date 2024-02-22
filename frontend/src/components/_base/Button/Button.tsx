@@ -14,10 +14,11 @@ export default function BaseButton(
     },
     color = 'bw',
     size = 'medium',
+    disabled = false,
   }: { 
     children?: React.ReactNode,
     className?: string,
-    onClick?: Function, // @todo: разобраться как делать типизирование функций в пропсы
+    onClick?: () => void,
     href?: string,
     submit?: {
       isSubmit: boolean,
@@ -25,6 +26,7 @@ export default function BaseButton(
     },
     color?: 'bw' | 'colored',
     size?: 'small' | 'medium' | 'large',
+    disabled?: boolean;
   }
 ) {
   const classes = classNames([
@@ -32,6 +34,7 @@ export default function BaseButton(
     className,
     `base-button--${color}`,
     `base-button--${size}`,
+    { disabled },
   ]);
 
   // todo: переделать на декоратор c ev.preventDefault()
@@ -44,9 +47,9 @@ export default function BaseButton(
   if (href) {
     tsx = <Link className={classes} href={href}>{children}</Link>;
   } else if (submit.isSubmit) {
-    tsx = <input className={classes} type="submit" value={submit.value} onClick={(ev) => {action(ev)}} />;
+    tsx = <input className={classes} disabled={disabled} type="submit" value={submit.value} onClick={(ev) => {action(ev)}} />;
   } else {
-    tsx = <button className={classes} onClick={(ev) => {action(ev)}}>{children}</button>;
+    tsx = <button className={classes} disabled={disabled} onClick={(ev) => {action(ev)}}>{children}</button>;
   }
 
   return tsx;

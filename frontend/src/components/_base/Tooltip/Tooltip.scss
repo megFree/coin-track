@@ -1,0 +1,23 @@
+.base-tooltip {
+  padding: 8px;
+  border-radius: 8px;
+  display: inline-block;
+  box-shadow: 0 0 33px #44537150;
+  font-size: 12px;
+  position: relative;
+  background: var(--white);
+
+  &::before {
+    position: absolute;
+    content: '';
+    width: 0;
+    height: 0;
+    top: -10px;
+    left: 16px;
+    border-bottom: 10px solid var(--white);
+    border-right: 8px solid transparent;
+    border-left: 8px solid transparent;
+    box-sizing: border-box;
+    box-shadow: 0 0 33px #44537150;
+  }
+}

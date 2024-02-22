@@ -40,5 +40,11 @@ a.base-button,
       background: var(--accent);
       color: var(--white);
     }
+
+    &.disabled {
+      background: var(--disabled-bg);
+      color: var(--disabled-font);
+      border: 1px solid transparent;
+    }
   }
 }

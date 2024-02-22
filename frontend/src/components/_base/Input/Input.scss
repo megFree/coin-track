@@ -1,3 +1,7 @@
+.base-input {
+  position: relative;
+}
+
 .base-input__exact {
   padding: 12px;
   font-size: 16px;
@@ -10,4 +14,27 @@
 .base-input__label-text {
   display: inline-block;
   margin-bottom: 6px;
+}
+
+.base-input__tooltip.base-tooltip {
+  opacity: 0;
+  pointer-events: none;
+  bottom: -30px;
+  left: 0;
+  transition: all .2s ease-in-out;
+  position: absolute;
+}
+
+.base-input {
+  &--error {
+    .base-input__exact {
+      border: 2px solid var(--error);
+      color: var(--error);
+    }
+
+    .base-input__tooltip {
+      bottom: -24px;
+      opacity: 1;
+    }
+  }
 }

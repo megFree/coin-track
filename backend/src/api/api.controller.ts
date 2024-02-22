@@ -59,14 +59,20 @@ export class ApiController {
   @Get('me')
   @UseGuards(AuthGuard)
   getMe(@Req() req: ExpressRequest) {
-    const token = Helper.ExtractHtmlCookieFromHeader(req, JWT_TOKEN_COOKIE_NAME);
+    const token = Helper.ExtractHtmlCookieFromHeader(
+      req,
+      JWT_TOKEN_COOKIE_NAME,
+    );
     return this.apiService.getCurrentUser(token);
   }
 
   @Get('accounts')
   @UseGuards(AuthGuard)
   getAccounts(@Req() req) {
-    const token = Helper.ExtractHtmlCookieFromHeader(req, JWT_TOKEN_COOKIE_NAME);
+    const token = Helper.ExtractHtmlCookieFromHeader(
+      req,
+      JWT_TOKEN_COOKIE_NAME,
+    );
     return this.apiService.getAccounts(token);
   }
 
@@ -78,7 +84,10 @@ export class ApiController {
   @Post('createAccount')
   @UseGuards(AuthGuard)
   createAccount(@Body() accountDto: AccountDto, @Req() req) {
-    const token = Helper.ExtractHtmlCookieFromHeader(req, JWT_TOKEN_COOKIE_NAME);
+    const token = Helper.ExtractHtmlCookieFromHeader(
+      req,
+      JWT_TOKEN_COOKIE_NAME,
+    );
     return this.apiService.createAccount(token, accountDto);
   }
 
@@ -88,17 +97,23 @@ export class ApiController {
     if (!body.id) {
       throw new UnprocessableEntityException(`No account id in request body`);
     }
-    const token = Helper.ExtractHtmlCookieFromHeader(req, JWT_TOKEN_COOKIE_NAME);
+    const token = Helper.ExtractHtmlCookieFromHeader(
+      req,
+      JWT_TOKEN_COOKIE_NAME,
+    );
     return this.apiService.deleteAccount(token, body.id);
   }
 
   @Post('updateAccount')
   @UseGuards(AuthGuard)
-  updateAccount(@Body() account: AccountDto, @Req() req) {
+  async updateAccount(@Body() account: AccountDto, @Req() req) {
     if (!account.id) {
       throw new UnprocessableEntityException(`No account id in request body`);
     }
-    const token = Helper.ExtractHtmlCookieFromHeader(req, JWT_TOKEN_COOKIE_NAME);
-    return this.apiService.updateAccount(token, account);
+    const token = Helper.ExtractHtmlCookieFromHeader(
+      req,
+      JWT_TOKEN_COOKIE_NAME,
+    );
+    return await this.apiService.updateAccount(token, account);
   }
 }

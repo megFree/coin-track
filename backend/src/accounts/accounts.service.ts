@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Account } from './entities/account.entity';
@@ -37,7 +37,17 @@ export class AccountsService {
     });
   }
 
-  updateAccount(accountDto: AccountDto) {
-    return this.accountsRepository.save(accountDto);
+  async updateAccount(accountDto: AccountDto) {
+    if (accountDto.amount < 0) {
+      throw new UnprocessableEntityException('Отрицательная сумма');
+    }
+
+    try {
+      return await this.accountsRepository.save(accountDto);
+    } catch (e) {
+      throw new UnprocessableEntityException(
+        'При сохранении счёта произошла ошибка',
+      );
+    }
   }
 }
