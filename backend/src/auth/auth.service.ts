@@ -40,15 +40,15 @@ export class AuthService {
   }
 
   async signIn(usernameArg: string, pass: string) {
-    const user = await this.usersService.findOne(usernameArg);
-    if (await bcrypt.compare(pass, user.password)) {
-      /* 
-        @todo: подумать над тем, какие коды ошибок возвращать, 
-        чтобы на фронте решать, какие текста и сообщения показывать
-      */
+    try {
+      const user = await this.usersService.findOne(usernameArg);
+      if (await bcrypt.compare(pass, user.password)) {
+        return this.getAuthenticationResult(user);
+      }
+      throw new UnauthorizedException();
+    } catch (e) {
       throw new UnauthorizedException();
     }
-    return this.getAuthenticationResult(user);
   }
 
   async signUp(signUpDto: SignUpDto) {

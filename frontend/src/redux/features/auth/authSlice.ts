@@ -1,9 +1,8 @@
-import { AppDispatch, RootState } from '@/redux/store';
+import { FieldValidator } from '@/lib/FieldValidator';
 import { AppField, AppFieldType, PartialRecord, AuthenticationType, ReduxUser } from '@/types';
-import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 type AuthenticationState = Record<AuthenticationType, {
-  isValid: boolean;
   errorMessage: string;
   fields: PartialRecord<AppFieldType, AppField>
 }> & { 
@@ -21,43 +20,41 @@ const initialState: AuthenticationState = {
     username: null,
   },
   singIn: {
-    isValid: true,
     errorMessage: '',
     fields: {
       username: {
         value: '',
         isValid: false,
-        errorMessage: '',
         isDirty: false,
+        errors: [],
       },
       password: {
         value: '',
         isValid: false,
-        errorMessage: '',
+        errors: [],
         isDirty: false,
       },
     },
   },
   singUp: {
-    isValid: true,
     errorMessage: '',
     fields: {
       username: {
         value: '',
         isValid: false,
-        errorMessage: '',
+        errors: [],
         isDirty: false,
       },
       password: {
         value: '',
         isValid: false,
-        errorMessage: '',
+        errors: [],
         isDirty: false,
       },
       password_repeat: {
         value: '',
         isValid: false,
-        errorMessage: '',
+        errors: [],
         isDirty: false,
       },
     },
@@ -78,16 +75,22 @@ export const authSlice = createSlice({
       action: PayloadAction<{
         regType: AuthenticationType,
         fieldType: AppFieldType,
-        value: any 
+        value: any,
       }>,
     ) {
       const { payload } = action;
       const { regType, fieldType, value } = payload;
-      const actualField = state[regType].fields[fieldType];
-      if (actualField) {
-        actualField.value = value;
-        actualField.isDirty = true;
-      }
+      const newField = {
+        ...state[regType].fields[fieldType],
+        value,
+      } as AppField;
+      const additionalValidationContext = fieldType === 'password_repeat' ? { password: state.singUp.fields.password } : undefined;
+      const validatedField = FieldValidator.validate(fieldType, newField, true, additionalValidationContext);
+      state[regType].fields[fieldType] = {
+        ...state[regType].fields[fieldType],
+        ...validatedField,
+        isDirty: true,
+      };
     },
 
     /**
@@ -108,9 +111,7 @@ export const authSlice = createSlice({
     setAuthenticationMethodError(state, action: PayloadAction<{
       authenticationMethod: AuthenticationType,
       errorMessage: string,
-      isValid: boolean,
     }>) {
-      state[action.payload.authenticationMethod].isValid = action.payload.isValid;
       state[action.payload.authenticationMethod].errorMessage = action.payload.errorMessage;
     },
 

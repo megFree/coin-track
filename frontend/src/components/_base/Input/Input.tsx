@@ -14,6 +14,7 @@ export default function BaseInput({
   error = {
     isError: false,
     message: '',
+    messages: [],
   },
 }: {
   className?: string,
@@ -23,7 +24,14 @@ export default function BaseInput({
   label?: string;
   autoFocus?: boolean; 
   onChange?: (value: string | number) => unknown,
-  error?: { isError: boolean; message: string }
+  error?: { 
+    isError: boolean; 
+    /**
+     * @deprecated use "messages" prop instead
+     */
+    message?: string; 
+    messages?: string[] 
+  }
 }) {
   const [value, setValue] = useState(initialValue);
 
@@ -32,6 +40,29 @@ export default function BaseInput({
     className,
     {'base-input--error': error.isError},
   ]);
+
+  const errorTooltipContent = () => {
+    if (!error.messages?.length) {
+      return error.message || '';
+    }
+
+    if (error.messages.length === 1) {
+      return error.messages[0];
+    }
+
+    return (
+      <ul className='base-input__tooltip-list'>
+        {error.messages.map((error, index) => (
+          <li
+            className='base-input__tooltip-list-item' 
+            key={`${index}-${error}`}
+          >
+            {error}
+          </li>
+        ))}
+      </ul>
+    )
+  };
 
   const exactInput = (
     <input 
@@ -54,7 +85,7 @@ export default function BaseInput({
           <span className='base-input__label-text'>{label}</span>}
         {exactInput}
       </label>
-      <BaseTooltip className='base-input__tooltip'>{error.message}</BaseTooltip>
+      <BaseTooltip className='base-input__tooltip'>{errorTooltipContent()}</BaseTooltip>
     </div>
   )
 }

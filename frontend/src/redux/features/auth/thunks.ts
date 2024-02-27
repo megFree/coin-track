@@ -1,25 +1,17 @@
 import { AppDispatch, RootState } from '@/redux/store';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { setUser, setAuthenticationMethodError } from './authSlice';
+import { setUser, setAuthenticationMethodError, setAuthField } from './authSlice';
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export const singIn = createAsyncThunk<any, void, { state: RootState, dispatch: AppDispatch }> (
   'auth/singIn',
   async (_, { getState, dispatch }) => {
-    // @todo: тут валидацию прикрутить
     const authState = getState().auth;
     const username = authState.singIn.fields.username?.value;
     const password = authState.singIn.fields.password?.value;
-    const isValid = authState.singIn.isValid;
-
-    if (!isValid) {
-      return;
-    }
 
     try {
-      // @todo: вынести прямой путь в .env
-      // @todo: сделать API модуль
       const response = await fetch(`${apiUrl}/login`, {
         method: 'POST',
         headers: {
@@ -44,14 +36,12 @@ export const singIn = createAsyncThunk<any, void, { state: RootState, dispatch: 
       if (response.status === 401) {
         dispatch(setAuthenticationMethodError({
           authenticationMethod: 'singIn',
-          isValid: false,
           errorMessage: 'Никнейм или пароль введены неверно.',
         }));
       }
     } catch (e) {
       dispatch(setAuthenticationMethodError({
         authenticationMethod: 'singIn',
-        isValid: true,
         errorMessage: 'Что-то пошло не так, попробуйте позже.',
       }))
     }
@@ -64,15 +54,8 @@ export const signUp = createAsyncThunk<any, void, { state: RootState, dispatch: 
     const authState = getState().auth;
     const username = authState.singUp.fields.username?.value;
     const password = authState.singUp.fields.password?.value;
-    const isValid = authState.singUp.isValid;
-
-    if (!isValid) {
-      return;
-    }
 
     try {
-      // @todo: вынести прямой путь в .env
-      // @todo: сделать API модуль
       const response = await fetch(`${apiUrl}/register`, {
         method: 'POST',
         headers: {
@@ -94,17 +77,15 @@ export const signUp = createAsyncThunk<any, void, { state: RootState, dispatch: 
         }));
       }
 
-      if (response.status === 401) {
+      if (response.status === 409) {
         dispatch(setAuthenticationMethodError({
-          authenticationMethod: 'singIn',
-          isValid: false,
-          errorMessage: 'Никнейм или пароль введены неверно.',
+          authenticationMethod: 'singUp',
+          errorMessage: 'Пользователь с таким никнеймом уже есть',
         }));
       }
     } catch (e) {
       dispatch(setAuthenticationMethodError({
-        authenticationMethod: 'singIn',
-        isValid: true,
+        authenticationMethod: 'singUp',
         errorMessage: 'Что-то пошло не так, попробуйте позже.',
       }))
     }

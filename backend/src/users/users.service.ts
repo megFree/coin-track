@@ -1,4 +1,4 @@
-import { Injectable, UnprocessableEntityException } from '@nestjs/common';
+import { ConflictException, Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
@@ -19,6 +19,10 @@ export class UsersService {
       },
     });
 
+    if (!user) {
+      throw new Error('Пользователь не найден');
+    }
+
     return user;
   }
 
@@ -27,9 +31,7 @@ export class UsersService {
       const user = await this.userRepository.save(signUpDto);
       return user;
     } catch (e) {
-      throw new UnprocessableEntityException(
-        'Пользователь с таким никнеймом уже есть.',
-      );
+      throw new ConflictException('Пользователь с таким никнеймом уже есть.');
     }
   }
 }

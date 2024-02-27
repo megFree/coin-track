@@ -1,0 +1,17 @@
+.base-notice {
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 14px;
+
+  &--neutral {
+    background: #919191;
+    color: var(--white);
+    border-right: 3px solid #6f6f6f;
+  }
+
+  &--error {
+    background: #cf2d2d;
+    border-right: 3px solid #ab0505;
+    color: var(--white);
+  }
+}

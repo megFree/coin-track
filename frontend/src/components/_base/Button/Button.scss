@@ -15,6 +15,7 @@ a.base-button,
   background: transparent;
   color: var(--white);
   cursor: pointer;
+  position: relative;
 
   &:hover {
     background: var(--white);
@@ -26,6 +27,16 @@ a.base-button,
     font-size: 16px;
     border-radius: 16px;
     height: 90px;
+  }
+
+  &.disabled {
+    border: 1px solid transparent;
+    color: var(--disabled-font-no-alpha);
+
+    &:hover {
+      background: transparent;
+      color: var(--white);
+    }
   }
 
   &--small {

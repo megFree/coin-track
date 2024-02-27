@@ -13,8 +13,12 @@ export type AppFieldType = 'username' | 'password' | 'password_repeat' | 'accoun
 export interface AppField {
   value: any;
   isValid: boolean;
-  errorMessage: string;
+  /**
+   * @deprecated use "errors" field instead
+   */
+  errorMessage?: string;
   isDirty: boolean;
+  errors?: string[],
 }
 
 export interface ReduxUser {

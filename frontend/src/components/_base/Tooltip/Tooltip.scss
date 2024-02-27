@@ -6,6 +6,8 @@
   font-size: 12px;
   position: relative;
   background: var(--white);
+  z-index: 1;
+  height: fit-content;
 
   &::before {
     position: absolute;

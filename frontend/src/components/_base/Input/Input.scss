@@ -25,6 +25,11 @@
   position: absolute;
 }
 
+.base-input__tooltip-list {
+  padding: 0 16px;
+  margin: 0;
+}
+
 .base-input {
   &--error {
     .base-input__exact {

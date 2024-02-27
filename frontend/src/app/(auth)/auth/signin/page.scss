@@ -1,3 +1,7 @@
+.singin-page {
+  position: relative;
+}
+
 .singin-page__inputs {
   display: flex;
   flex-direction: column;
@@ -13,4 +17,12 @@
 .signin-page__buttons {
   display: flex;
   justify-content: space-between;
+}
+
+.signin-page__error-notice {
+  position: absolute;
+  top: -32px;
+  left: 0;
+  width: 100%;
+  transform: translateY(calc(-100% + 16px));
 }
