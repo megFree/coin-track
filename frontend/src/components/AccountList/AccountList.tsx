@@ -29,8 +29,8 @@ export default function AccountList({
 
   const deleteAccountHandler = debounce(async (id: number) => {
     await dispatch(deleteAccount({ id }));
-    dispatch(getAccounts());
-  }, 1000);
+    await dispatch(getAccounts());
+  }, 1000, { trailing: false, leading: true });
 
   return (
     <div className={classes}>

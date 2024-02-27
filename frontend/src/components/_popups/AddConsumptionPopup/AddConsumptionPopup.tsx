@@ -9,6 +9,7 @@ import { useState } from 'react';
 export default function AddConsumptionPopup() {
   const dispatch = useAppDispatch();
   const [sum, setSum] = useState<undefined | number | string>();
+  const [isRequesting, setIsRequesting] = useState(false);
   const accountId = useAppSelector((state) => state.popups.data.accountId);
   const account = useAppSelector((state) => state.main.accounts.find((account) => account.id === accountId));
   const newSum = (account?.amount || 0) - (parseInt('' + sum) || 0);
@@ -24,11 +25,13 @@ export default function AddConsumptionPopup() {
   }
 
   const saveButtonHandler = async () => {
+    setIsRequesting(true);
     await dispatch(updateAccount({
       ...account,
       amount: newSum,
     }));
     await dispatch(getAccounts());
+    setIsRequesting(false);
     dispatch(popupClose());
   };
 
@@ -47,13 +50,10 @@ export default function AddConsumptionPopup() {
         className='add-consumption-popup__button'
         size='small'
         color='colored'
-        submit={{
-          isSubmit: true,
-          value: 'Сохранить'
-        }}
-        disabled={error.isError}
+        disabled={error.isError || isRequesting}
         onClick={saveButtonHandler}
-      />
+        loading={isRequesting}
+      >Сохранить</BaseButton>
     </div>
   );
 };

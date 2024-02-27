@@ -17,6 +17,8 @@ interface TypedAppField extends AppField {
 export default function CreateAccountPopup() {
   const dispatch = useAppDispatch();
 
+  const [isRequesting, setIsRequesting] = useState(false);
+
   const currencies = useAppSelector((state) => state.main.currencies);
 
   const [accountTitleField, setAccountTitleField] = useState<TypedAppField>({
@@ -110,12 +112,14 @@ export default function CreateAccountPopup() {
     if (!isFormValid) {
       return touchAllFields();
     }
+    setIsRequesting(true);
     await dispatch(createAccount({
       title: accountTitleField.value,
       amount: accountSumField.value,
       currency: currencyField.value,
     }));
     await dispatch(getAccounts());
+    setIsRequesting(false);
     dispatch(popupClose());
   }
 
@@ -165,7 +169,8 @@ export default function CreateAccountPopup() {
           color='colored'
           size='small'
           onClick={() => create()}
-          disabled={isAllFieldsDirty && !isFormValid}
+          disabled={isAllFieldsDirty && !isFormValid || isRequesting}
+          loading={isRequesting}
         >
           Создать
         </BaseButton>

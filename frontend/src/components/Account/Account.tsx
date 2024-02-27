@@ -6,6 +6,7 @@ import { APIAccount } from '@/types';
 import classNames from 'classnames';
 import { useState } from 'react';
 import { formatSumToString } from '@/lib/utils';
+import BaseLoader from '@/components/_base/Loader/Loader';
 
 export default function Account({
   className = '',
@@ -36,7 +37,7 @@ export default function Account({
       <div className="account__delete-btn" onClick={(e) => onCloseHandler(e)}>
         {
           isCloseLoading ? 
-            <Image src={Loader} className='loader' alt='иконка загрузки'/> :
+            <BaseLoader /> :
             <Image src={Close} alt='закрыть счёт'/>
         }
       </div>
