@@ -31,9 +31,8 @@ export default function Home() {
   };
 
   accounts.forEach((account) => {
-    totalFunds[account.currency] = account.amount;
-  });
-  // const totalFunds = accounts.reduce((sum, account) => sum += account.amount, 0);
+    totalFunds[account.currency] += account.amount;
+  });  
 
   return (
     <main className='main-page'>
